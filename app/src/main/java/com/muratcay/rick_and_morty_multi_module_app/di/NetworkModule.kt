@@ -52,8 +52,8 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient) // OkHttpClient'ı Retrofit'e ekleyin
+            .addConverterFactory(provideGsonConverterFactory())
+            .client(okHttpClient)
             .build()
     }
 
