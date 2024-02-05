@@ -5,6 +5,7 @@ import com.muratcay.data.repository.CharacterCache
 import com.muratcay.database.dao.CharacterDao
 import com.muratcay.database.mapper.CharacterCacheMapper
 import com.muratcay.database.utils.CachePreferencesHelper
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class CharacterCacheImp @Inject constructor(
     private val characterDao: CharacterDao,
     private val characterCacheMapper: CharacterCacheMapper,
-    private val preferencesHelper: CachePreferencesHelper
+    private val preferencesHelper: CachePreferencesHelper,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : CharacterCache {
 
     override suspend fun getCharacters(): List<CharacterEntity> {
@@ -25,8 +27,7 @@ class CharacterCacheImp @Inject constructor(
         return characterCacheMapper.mapFromCached(characterDao.getCharacter(characterId))
     }
 
-    override suspend fun saveCharacters(listCharacters: List<CharacterEntity>) = withContext(
-        Dispatchers.IO)  {
+    override suspend fun saveCharacters(listCharacters: List<CharacterEntity>) = withContext(ioDispatcher)  {
         characterDao.addCharacter(
             *listCharacters.map {
                 characterCacheMapper.mapToCached(it)
