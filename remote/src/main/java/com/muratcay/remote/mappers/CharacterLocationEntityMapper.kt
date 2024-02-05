@@ -7,6 +7,6 @@ import javax.inject.Inject
 class CharacterLocationEntityMapper @Inject constructor() :
     EntityMapper<CharacterLocationModel, CharacterLocationEntity> {
     override fun mapFromModel(model: CharacterLocationModel): CharacterLocationEntity {
-        return CharacterLocationEntity(name = model.name, url = model.url)
+        return CharacterLocationEntity(name = model.name, url = model.url, id = 0)
     }
 }

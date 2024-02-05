@@ -7,7 +7,7 @@ import javax.inject.Inject
 class CharacterLocationCacheMapper @Inject constructor() :
     CacheMapper<CharacterLocationCacheEntity, CharacterLocationEntity> {
     override fun mapFromCached(type: CharacterLocationCacheEntity): CharacterLocationEntity {
-        return CharacterLocationEntity(name = type.name, url = type.url)
+        return CharacterLocationEntity(name = type.name, url = type.url, id = 0)
     }
 
     override fun mapToCached(type: CharacterLocationEntity): CharacterLocationCacheEntity {

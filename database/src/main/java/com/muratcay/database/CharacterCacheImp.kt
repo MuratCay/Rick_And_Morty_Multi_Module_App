@@ -6,7 +6,6 @@ import com.muratcay.database.dao.CharacterDao
 import com.muratcay.database.mapper.CharacterCacheMapper
 import com.muratcay.database.utils.CachePreferencesHelper
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -23,8 +22,8 @@ class CharacterCacheImp @Inject constructor(
         }
     }
 
-    override suspend fun getCharacter(characterId: Long): CharacterEntity {
-        return characterCacheMapper.mapFromCached(characterDao.getCharacter(characterId))
+    override suspend fun getCharacter(characterId: Long): CharacterEntity = withContext(ioDispatcher)  {
+        return@withContext characterCacheMapper.mapFromCached(characterDao.getCharacter(characterId))
     }
 
     override suspend fun saveCharacters(listCharacters: List<CharacterEntity>) = withContext(ioDispatcher)  {
@@ -35,8 +34,8 @@ class CharacterCacheImp @Inject constructor(
         )
     }
 
-    override suspend fun getBookMarkedCharacters(): List<CharacterEntity> {
-        return characterDao.getBookMarkedCharacters().map { cacheCharacter ->
+    override suspend fun getBookMarkedCharacters(): List<CharacterEntity> = withContext(ioDispatcher)  {
+        return@withContext characterDao.getBookMarkedCharacters().map { cacheCharacter ->
             characterCacheMapper.mapFromCached(cacheCharacter)
         }
     }
@@ -49,8 +48,8 @@ class CharacterCacheImp @Inject constructor(
         return characterDao.unBookmarkCharacter(characterId)
     }
 
-    override suspend fun isCached(): Boolean {
-        return false
+    override suspend fun isCached(): Boolean = withContext(ioDispatcher)  {
+        return@withContext characterDao.getCharacters().isNotEmpty()
     }
 
     override suspend fun setLastCacheTime(lastCache: Long) {

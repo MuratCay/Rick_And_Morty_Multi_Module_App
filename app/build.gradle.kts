@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.android.safeArgs)
 }
 
 android {
@@ -68,6 +69,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.glide)
 
     implementation(libs.timber)
     implementation(libs.hilt.android)
@@ -76,6 +80,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     implementation(libs.kotlinx.serialization)
     implementation(libs.retrofit)

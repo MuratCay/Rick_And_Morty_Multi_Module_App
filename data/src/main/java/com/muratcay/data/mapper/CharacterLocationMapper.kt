@@ -11,6 +11,6 @@ class CharacterLocationMapper @Inject constructor() : Mapper<CharacterLocationEn
     }
 
     override fun mapToEntity(type: CharacterLocation): CharacterLocationEntity {
-        return CharacterLocationEntity(name = type.name, url = type.url)
+        return CharacterLocationEntity(name = type.name, url = type.url, id = 0)
     }
 }

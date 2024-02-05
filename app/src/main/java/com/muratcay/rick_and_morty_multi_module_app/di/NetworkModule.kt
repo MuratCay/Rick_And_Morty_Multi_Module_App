@@ -27,7 +27,6 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
-
     @Provides
     @Singleton
     fun providesOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
@@ -52,11 +51,10 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(provideGsonConverterFactory())
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
     }
-
     @Provides
     @Singleton
     fun provideCharacterService(retrofit: Retrofit): CharacterService {
