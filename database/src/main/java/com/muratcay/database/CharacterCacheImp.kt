@@ -16,8 +16,8 @@ class CharacterCacheImp @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : CharacterCache {
 
-    override suspend fun getCharacters(): List<CharacterEntity> {
-        return characterDao.getCharacters().map { cacheCharacter ->
+    override suspend fun getCharacters(): List<CharacterEntity> = withContext(ioDispatcher) {
+        return@withContext characterDao.getCharacters().map { cacheCharacter ->
             characterCacheMapper.mapFromCached(cacheCharacter)
         }
     }
