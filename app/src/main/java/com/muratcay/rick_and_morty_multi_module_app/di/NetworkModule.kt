@@ -1,6 +1,7 @@
 package com.muratcay.rick_and_morty_multi_module_app.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.muratcay.remote.api.CharacterService
 import com.muratcay.remote.utils.RemoteConstants.CONNECT_TIMEOUT
 import com.muratcay.remote.utils.RemoteConstants.READ_TIMEOUT
@@ -27,6 +28,7 @@ object NetworkModule {
     fun provideGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
+
     @Provides
     @Singleton
     fun providesOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
@@ -51,7 +53,7 @@ object NetworkModule {
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .client(okHttpClient)
             .build()
     }

@@ -12,9 +12,8 @@ class CharacterRemoteImp @Inject constructor(
 ) : CharacterRemote {
 
     override suspend fun getCharacters(): List<CharacterEntity> {
-        println(characterService.getCharacters() ?: "No characters found")
-        val characters = characterService.getCharacters().characters
-        return characters?.map { characterModel ->
+        val characters = characterService.getCharacters().results
+        return characters.map { characterModel ->
             characterEntityMapper.mapFromModel(characterModel)
         } ?: emptyList()
     }
