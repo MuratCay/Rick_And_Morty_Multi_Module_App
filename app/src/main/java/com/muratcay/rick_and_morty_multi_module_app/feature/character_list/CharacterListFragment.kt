@@ -1,5 +1,6 @@
 package com.muratcay.rick_and_morty_multi_module_app.feature.character_list
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -61,8 +62,7 @@ class CharacterListFragment :
     }
 
     private fun navigateToDetail(id: Long) {
-        val action = CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_to_character_detail, bundleOf("characterId" to Long))
     }
 
     private fun hideProgressBar() {

@@ -1,6 +1,7 @@
 package com.muratcay.presentation.character_detail
 
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.SavedStateHandle
 import com.muratcay.domain.Result
 import com.muratcay.domain.usecase.GetCharacterByIdUseCase
 import com.muratcay.presentation.base.BaseViewModel
@@ -10,16 +11,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
-    private val getCharacterByIdBaseUseCase: GetCharacterByIdUseCase
+    private val getCharacterByIdBaseUseCase: GetCharacterByIdUseCase,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel<CharacterDetailState>() {
 
     override fun setInitialState(): CharacterDetailState = CharacterDetailState.Loading
 
     init {
-        fetchCharacterById(1)
+        savedStateHandle.get<Long>("characterId")?.takeIf { it > 0 }?.let { id ->
+            fetchCharacterById(id)
+        }
     }
 
-    fun fetchCharacterById(id: Long) {
+    private fun fetchCharacterById(id: Long) {
         viewModelScope.launch {
             getCharacterByIdBaseUseCase.invoke(id).collect { result ->
                 when (result) {
